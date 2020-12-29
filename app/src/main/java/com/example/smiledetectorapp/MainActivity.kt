@@ -7,9 +7,9 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseApp
-import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetector
@@ -54,13 +54,33 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         try {
-            image = InputImage.fromBitmap(bitmap)
+            image = InputImage.fromBitmap(bitmap,0)
             detector = FaceDetection.getClient(options)
         }catch (e:Exception){
             e.printStackTrace()
         }
         detector.process(image).addOnSuccessListener {
+            var resultText = ""
+            var i = 1
 
+            if (it !=null){
+                for (face in it){
+                    resultText = resultText.plus("\n$i.").plus("\nSmile : "+face.smilingProbability!!*100+"%")
+                    i++
+                }
+            }
+            if (it!=null){
+                if (it.isEmpty()){
+                    Toast.makeText(this@MainActivity,"No Face Detected",Toast.LENGTH_LONG).show()
+                }else{
+                    val bundle = Bundle()
+                    bundle.putString(LCOFaceDetection.RESULT_TEXT,resultText)
+                    val resultDialog = ResultDialog()
+                    resultDialog.arguments = bundle
+                    resultDialog.isCancelable = false
+                    resultDialog.show(supportFragmentManager,LCOFaceDetection.RESULT_DIALOG)
+                }
+            }
         }
     }
 }
