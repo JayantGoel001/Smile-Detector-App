@@ -65,8 +65,9 @@ class MainActivity : AppCompatActivity() {
 
             if (it !=null){
                 for (face in it){
-                    resultText = resultText.plus("\n$i.").plus("\nSmile : "+face.smilingProbability!!*100+"%")
-                    i++
+                    if (face.smilingProbability!=null) {
+                        resultText = resultText.plus("\nSmile : " + face.smilingProbability!! * 100 + "%")
+                    }
                 }
             }
             if (it!=null){
