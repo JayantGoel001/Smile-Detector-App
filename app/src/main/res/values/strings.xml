@@ -2,4 +2,5 @@
     <string name="app_name">Smile Detector App</string>
     <string name="take_picture">Take Picture</string>
     <string name="smile_detector_application">Smile Detector Application</string>
+    <string name="ok">OK</string>
 </resources>
