@@ -15,7 +15,6 @@ class ResultDialog : DialogFragment() {
         val view = inflater.inflate(R.layout.fragment_resultdialog,container,false)
         okButton = view.findViewById(R.id.result_ok_button)
         resultTV = view.findViewById(R.id.result_text_view)
-
         val resultText = arguments!!.getString(LCOFaceDetection.RESULT_TEXT)
         resultTV.text = resultText
         okButton.setOnClickListener {
